@@ -177,7 +177,17 @@ void turnRight(){
 
 /*********************************  task ************************************/
 uint32_t result = 0;
+uint32_t result_left = 0;
+uint32_t result_right = 0;
 uint32_t forward = 0;
+
+// uwDiffCapture1 : right
+// uwDiffCapture2 : forward
+// uwDiffCapture3 : left
+
+// forward, right 1 -> turn left
+// forward, left 1 ->  turn right
+// forward, right, left 1 -> backward
 
 void Detect_obstacle(){
 		osDelay(200);  // 태스크 만든 후 약간의 딜레이
@@ -190,11 +200,25 @@ void Detect_obstacle(){
 					{         
 								result = 1;		
 								 //  printf("\r\n result = %d", result);
-									 
+							if( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 10 )
+							{
+								result_left = 1;
+							}
+							else if ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 10)
+							{
+								result_right = 1;
+							}
+							else if (( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 10) && ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 10))
+							{
+								result_left = 1;
+								result_right = 1;
+							}
 					}
 					else
 					{
 								result = 0;
+								result_left = 0;
+								result_right = 0;
 								//   printf("\r\n result = %d", result);
 					}
 			}
@@ -231,7 +255,17 @@ void Motor_control(){
             if(result == 1)
 						{
 							Motor_Stop();
-						  turnRight();
+							if(result_left == 1)
+							{
+								turnRight();
+							}
+							else if(result_right == 1)
+							{
+								turnLeft();
+							}
+							else if(result_left == 1 && result_right == 1)
+							{
+							}
 						  Motor_Stop();
 							osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)
 						}
