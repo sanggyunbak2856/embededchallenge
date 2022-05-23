@@ -142,7 +142,7 @@ PUTCHAR_PROTOTYPE
  void turnLeft(){
 		 int i;
 		// uBrain마다 다를 수 있으므로 각도는 각자 수정
-		 for(i=0; i<30; i++) {
+		 for(i=0; i<25; i++) {
 					 Motor_Stop();
 					 osDelay(50); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
  
@@ -150,6 +150,23 @@ PUTCHAR_PROTOTYPE
 					 Motor_Left();
 																
 					 while(motorInterrupt1 < 30) { 										// 1회 회전시 바퀴 회전수 30만큼 회전 (약 3도) 
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 값을 읽어오기 위한 딜레이
+					 }
+					 Motor_Stop();
+			}
+}
+ 
+void turnRight(){
+		 int i;
+		// uBrain마다 다를 수 있으므로 각도는 각자 수정
+		 for(i=0; i<27; i++) {
+					 Motor_Stop();
+					 osDelay(50); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
+ 
+					 motorInterrupt2 = 1;		// 바퀴 회전 값 초기화
+					 Motor_Right();
+																
+					 while(motorInterrupt2 < 30) { 										// 1회 회전시 바퀴 회전수 30만큼 회전 (약 3도) 
 										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 값을 읽어오기 위한 딜레이
 					 }
 					 Motor_Stop();
@@ -214,7 +231,7 @@ void Motor_control(){
             if(result == 1)
 						{
 							Motor_Stop();
-						  turnLeft();
+						  turnRight();
 						  Motor_Stop();
 							osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)
 						}
@@ -289,7 +306,7 @@ int main(void)
    sConfig1.OCMode     = TIM_OCMODE_PWM1;
    sConfig1.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig1.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig1.Pulse = 16000;
+   sConfig1.Pulse = 17000;
    
    TimHandle1.Instance = TIM8;
    TimHandle1.Init.Prescaler     = uwPrescalerValue;
@@ -305,7 +322,7 @@ int main(void)
    sConfig2.OCMode     = TIM_OCMODE_PWM1;
    sConfig2.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig2.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig2.Pulse = 17000;
+   sConfig2.Pulse = 17400;
    
    TimHandle2.Instance = TIM4; 
    TimHandle2.Init.Prescaler     = uwPrescalerValue;
