@@ -179,6 +179,7 @@ void turnRight(){
 uint32_t result = 0;
 uint32_t result_left = 0;
 uint32_t result_right = 0;
+uint32_t result_back = 0;
 uint32_t forward = 0;
 
 // uwDiffCapture1 : right
@@ -197,21 +198,19 @@ void Detect_obstacle(){
 			{
 					osDelay(100);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
 					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <10  )
-					{         
-								result = 1;		
-								 //  printf("\r\n result = %d", result);
-							if( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 10 )
+					{   
+							result =1;
+							if(uwDiffCapture1/58 < uwDiffCapture3/58)
 							{
 								result_left = 1;
 							}
-							else if ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 10)
+						if(uwDiffCapture3/58 > uwDiffCapture1/58)
 							{
 								result_right = 1;
 							}
 							else if (( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 10) && ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 10))
 							{
-								result_left = 1;
-								result_right = 1;
+								result_back = 1;
 							}
 					}
 					else
@@ -252,28 +251,25 @@ void Motor_control(){
 	
    for(;;)
     {
-            if(result == 1)
-						{
-							Motor_Stop();
+			if(result ==1){
+				Motor_Stop();
 							if(result_left == 1)
-							{
-								turnRight();
-							}
-							else if(result_right == 1)
 							{
 								turnLeft();
 							}
-							else if(result_left == 1 && result_right == 1)
+							else if(result_right == 1)
 							{
+								turnRight();
 							}
-						  Motor_Stop();
+							else if(result_back == 1)
+							{
+								Motor_Backward();
+							}
+						}
 							osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)
-						}
-						else{
 							Motor_Forward();
-						}
+							
     }
-   
 }
 
 /*적외선 태스크 부분 - 나중에 사용(선택) */
