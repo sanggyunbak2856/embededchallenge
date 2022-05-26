@@ -196,21 +196,29 @@ void Detect_obstacle(){
 
 		for(;;)
 			{
-					osDelay(100);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
-					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <10  )
+					osDelay(10);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
+					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <20  )
 					{   
 							result =1;
-							if(uwDiffCapture1/58 < uwDiffCapture3/58)
+							if(uwDiffCapture1/58 < uwDiffCapture3/58) // right < left
 							{
+								printf("Left");
 								result_left = 1;
 							}
-						if(uwDiffCapture3/58 > uwDiffCapture1/58)
+							else if(uwDiffCapture3/58 < uwDiffCapture1/58) // left < right
 							{
+								printf("Right");
 								result_right = 1;
 							}
-							else if (( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 10) && ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 10))
+							else if (( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 10) && ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 10)) // 
 							{
+								printf("Back");
 								result_back = 1;
+							}
+							else
+							{
+								printf("Left");
+								result_left = 1 ;
 							}
 					}
 					else
@@ -218,6 +226,7 @@ void Detect_obstacle(){
 								result = 0;
 								result_left = 0;
 								result_right = 0;
+								result_back = 0;
 								//   printf("\r\n result = %d", result);
 					}
 			}
@@ -255,20 +264,24 @@ void Motor_control(){
 				Motor_Stop();
 							if(result_left == 1)
 							{
+								printf("Left\n");
 								turnLeft();
 							}
 							else if(result_right == 1)
 							{
+								printf("Right\n");
 								turnRight();
 							}
 							else if(result_back == 1)
 							{
+								printf("Back\n");
 								Motor_Backward();
 							}
 						}
-							osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)
-							Motor_Forward();
-							
+			else {
+				osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)		
+				Motor_Forward();
+			}					
     }
 }
 
@@ -336,7 +349,7 @@ int main(void)
    sConfig1.OCMode     = TIM_OCMODE_PWM1;
    sConfig1.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig1.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig1.Pulse = 17000;
+   sConfig1.Pulse = 15000;
    
    TimHandle1.Instance = TIM8;
    TimHandle1.Init.Prescaler     = uwPrescalerValue;
@@ -352,7 +365,7 @@ int main(void)
    sConfig2.OCMode     = TIM_OCMODE_PWM1;
    sConfig2.OCPolarity = TIM_OCPOLARITY_HIGH;
    sConfig2.OCFastMode = TIM_OCFAST_DISABLE;
-   sConfig2.Pulse = 17400;
+   sConfig2.Pulse = 15600;
    
    TimHandle2.Instance = TIM4; 
    TimHandle2.Init.Prescaler     = uwPrescalerValue;
