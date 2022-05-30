@@ -223,16 +223,6 @@ void Detect_obstacle(){
 								result_left = 1 ;
 							}
 					}
-					else if(uwDiffCapture1/58 < 2) // right						
-					{
-						printf("left\n");
-						close_left = 1;
-					}
-					else if(uwDiffCapture3<58 < 2) // left
-					{
-						printf("right\n");
-						close_right = 1;
-					}
 					else
 					{
 								result = 0;
@@ -242,6 +232,15 @@ void Detect_obstacle(){
 								close_right = 0;
 								close_left = 0;
 								//   printf("\r\n result = %d", result);
+					}
+					
+					if((uwDiffCapture1/58) < 2) // right						
+					{
+						close_left = 1;
+					}
+					if((uwDiffCapture3/58) < 2) // left
+					{
+						close_right = 1;
 					}
 			}
 }
@@ -293,9 +292,11 @@ void Motor_control(){
 							}
 						}
 			else if(close_right == 1) {
+				printf("right\n");
 				turnLeft(2);
 			}
 			else if(close_left == 1) {
+				printf("left\n");
 			  turnRight(2);
 			}
 			else {
