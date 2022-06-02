@@ -202,7 +202,12 @@ void Detect_obstacle(){
 					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 <20  )
 					{   
 							result =1;
-							if(uwDiffCapture1/58 < uwDiffCapture3/58) // right < left
+						  if (( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 20) && ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 20)) // 
+							{
+								// printf("Back");
+								result_back = 1;
+							}
+							else if(uwDiffCapture1/58 < uwDiffCapture3/58) // right < left
 							{
 								// printf("Left");
 								result_left = 1;
@@ -211,11 +216,6 @@ void Detect_obstacle(){
 							{
 								// printf("Right");
 								result_right = 1;
-							}
-							else if (( uwDiffCapture1/58 > 0 && uwDiffCapture1/58 < 100) && ( uwDiffCapture3/58 > 0 && uwDiffCapture3/58 < 100)) // 
-							{
-								// printf("Back");
-								result_back = 1;
 							}
 							else
 							{
