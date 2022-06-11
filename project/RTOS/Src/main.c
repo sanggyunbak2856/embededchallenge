@@ -204,14 +204,14 @@ void Detect_obstacle(){
 					// printf("Right: %d\n", uwDiffCapture1/58);
 					osDelay(10);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
 					
-					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 10)
+					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15)
 					{   
 							result =1;
-								if(uhADCxRight > 1800) // ir
+								if(uhADCxRight > 1700) // ir
 								{
 									IR_close_right = 1;
 								}
-								else if(uhADCxLeft > 1800) // ir
+								else if(uhADCxLeft > 1700) // ir
 								{
 									IR_close_left = 1;
 								}
@@ -232,19 +232,19 @@ void Detect_obstacle(){
 					}
 					else // 초음파 앞 센서가 20보다 클때
 					{
-								if((uwDiffCapture1/58) < 5) // right						
+								if((uwDiffCapture1/58) < 4) // right						
 								{
 									close_right = 1;
 								}
-								else if((uwDiffCapture3/58) < 5) // left
+								else if((uwDiffCapture3/58) < 4) // left
 								{
 									close_left = 1;
 								}
-								else if(uhADCxRight > 1800)
+								else if(uhADCxRight > 1700)
 								{
 									IR_close_right = 1;
 								}
-								else if(uhADCxLeft > 1800)
+								else if(uhADCxLeft > 1700)
 								{
 									IR_close_left = 1;
 								}
@@ -590,11 +590,16 @@ int main(void)
 	 /**** ES+L9.+Embedded+OS - 28 page 참고 ****/
 		 
 	 /**********여기에 Task 를 생성하시오********/
+	 
+	 // 
 
 	 
 	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 2, NULL);
 	 xTaskCreate( IR_Sensor, "IR", 1000, NULL, 2, NULL);
-	 xTaskCreate( Motor_control, "motor", 1000, NULL, 2, NULL);
+	 xTaskCreate( Motor_control, "motor", 1000, NULL, 3
+	 
+	 
+	 , NULL);
    //xTaskCreate( Motor_forandback, "motor", 1000, NULL, 2, NULL);
 
 	 vTaskStartScheduler();
