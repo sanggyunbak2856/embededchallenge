@@ -200,38 +200,50 @@ void Detect_obstacle(){
 
 		for(;;)
 			{
+					// printf("detect obstacle\n");
 					// printf("Left : %d\n", uwDiffCapture3/58);
 					// printf("Right: %d\n", uwDiffCapture1/58);
-					osDelay(10);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
+					osDelay(50);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
 					
-					if( uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15)
-					{   
-							result =1;
-								if(uhADCxRight > 1700) // ir
-								{
-									IR_close_right = 1;
-								}
-								else if(uhADCxLeft > 1700) // ir
-								{
-									IR_close_left = 1;
-								}
-							else if(uwDiffCapture1/58 < uwDiffCapture3/58) // right < left
-							{
-								result_left = 1;
-							}
-							else if(uwDiffCapture3/58 < uwDiffCapture1/58) // left < right
-							{
-								// printf("Right");
-								result_right = 1;
-							}
-							else
-							{
-								// printf("Left");
-								result_left = 1 ;
-							}
-					}
-					else // 초음파 앞 센서가 20보다 클때
+					if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
 					{
+						// result = 1;
+						result_left = 1;
+					}
+					else if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) >= (uwDiffCapture3/58)))
+					{  
+						// result = 1;
+						result_right = 1;
+					}
+					else if((uwDiffCapture2/58 >= 15) && (uwDiffCapture1/58 < 4)) // right
+					{
+						close_right = 1;
+					}
+					else if((uwDiffCapture2/58 >= 15) && (uwDiffCapture3/58 < 4)) //  left
+					{
+						close_left = 1;
+					}
+					else if((uwDiffCapture2/58 >= 15) && (uhADCxRight > 1250))
+					{
+						IR_close_right = 1;
+					}
+					else if((uwDiffCapture2/58 >= 15) && (uhADCxLeft > 1250))
+					{
+						IR_close_left = 1;
+					}
+					else
+					{
+										// result = 0;
+										result_left = 0;
+										result_right = 0;
+										// result_back = 0;
+										close_right = 0;
+										close_left = 0;
+									  IR_close_left = 0;
+										IR_close_right = 0;
+					}
+					// 초음파 앞 센서가 20보다 클때
+					/*{
 								if((uwDiffCapture1/58) < 4) // right						
 								{
 									close_right = 1;
@@ -260,7 +272,7 @@ void Detect_obstacle(){
 										IR_close_right = 0;
 										//   printf("\r\n result = %d", result);
 								}
-					}
+					}*/
 			}
 }
 
@@ -292,7 +304,20 @@ void Motor_control(){
 	
    for(;;)
     {
-			if(result ==1){
+			if(result_left == 1)
+			{
+				printf("Motor control\n");
+				Motor_Stop();
+				turnLeft(25);
+			}
+			else if(result_right == 1)
+			{
+				printf("Motor control\n");
+				Motor_Stop();
+				turnRight(27);
+			}
+			
+			/*if(result ==1){
 				Motor_Stop();
 							if(result_left == 1)
 							{
@@ -305,21 +330,30 @@ void Motor_control(){
 								turnRight(27);
 							}
 						}
+			*/
 			else if(close_right == 1) {
 				// printf("right\n");
-				turnLeft(2);
+				// printf("Motor control\n");
+				Motor_Stop();
+				turnLeft(3);
 			}
 			else if(close_left == 1) {
 				// printf("left\n");
-			  turnRight(2);
+				// printf("Motor control\n");
+				Motor_Stop();
+			  turnRight(3);
 			}
 			else if(IR_close_right == 1) {
 				// printf("right\n");
-				turnLeft(2);
+				// printf("Motor control\n");
+				Motor_Stop();
+				turnLeft(3);
 			}
 			else if(IR_close_left == 1) {
 				// printf("left\n");
-			  turnRight(2);
+				// printf("Motor control\n");
+				Motor_Stop();
+			  turnRight(3);
 			}
 			else {
 				osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)		
@@ -332,7 +366,7 @@ void Motor_control(){
 void IR_Sensor(){
    for(;;){
 		 
-		 
+		 printf("IR sensor\n");
       
       HAL_ADC_Start(&AdcHandle1);
       uhADCxLeft = HAL_ADC_GetValue(&AdcHandle1);
@@ -373,8 +407,8 @@ void IR_Sensor(){
 			}
       // printf("\r\nIR sensor Right = %d", uhADCxRight);
 			
-			printf("IR left : %d\n", uhADCxLeft);
-		  printf("IR right : %d\n", uhADCxRight);
+			// printf("IR left : %d\n", uhADCxLeft);
+		  // printf("IR right : %d\n", uhADCxRight);
       
        osDelay(10);
    }
@@ -594,12 +628,9 @@ int main(void)
 	 // 
 
 	 
-	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 2, NULL);
-	 xTaskCreate( IR_Sensor, "IR", 1000, NULL, 2, NULL);
-	 xTaskCreate( Motor_control, "motor", 1000, NULL, 3
-	 
-	 
-	 , NULL);
+	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 1, NULL);
+	 xTaskCreate( IR_Sensor, "IR", 1000, NULL, 1, NULL);
+	 xTaskCreate( Motor_control, "motor", 1000, NULL, 5, NULL);
    //xTaskCreate( Motor_forandback, "motor", 1000, NULL, 2, NULL);
 
 	 vTaskStartScheduler();
