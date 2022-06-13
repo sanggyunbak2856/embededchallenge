@@ -88,6 +88,8 @@ uint32_t               uwIC2Value6= 0;
 uint32_t               uwDiffCapture3 = 0;
 
 uint32_t               uwFrequency = 0;
+uint32_t               right_before = 0;
+uint32_t               left_before=0;
 
 /* ADC handler declaration */
 ADC_HandleTypeDef    AdcHandle1, AdcHandle2, AdcHandle3;
@@ -138,19 +140,19 @@ PUTCHAR_PROTOTYPE
   */
 
 
- //¿ÞÂÊÀ¸·Î 90µµ µ¹±âÀ§ÇÑ ÇÔ¼ö
+ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 void turnLeft(int num){ // num default : 25
 		 int i;
-		// uBrain¸¶´Ù ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î °¢µµ´Â °¢ÀÚ ¼öÁ¤
+		// uBrainï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		 for(i=0; i<num; i++) {
 					 Motor_Stop();
-					 osDelay(50); // ¿©±â µô·¹ÀÌ¸¦ ³·Ãß¸é Á»´õ ºÎµå·´°Ô µ¹ ¼ö ÀÖ´Ù.
+					 osDelay(50); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
  
-					 motorInterrupt1 = 1;		// ¹ÙÄû È¸Àü °ª ÃÊ±âÈ­
+					 motorInterrupt1 = 1;		// ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­
 					 Motor_Left();
 																
-					 while(motorInterrupt1 < 30) { 										// 1È¸ È¸Àü½Ã ¹ÙÄû È¸Àü¼ö 30¸¸Å­ È¸Àü (¾à 3µµ) 
-										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 °ªÀ» ÀÐ¾î¿À±â À§ÇÑ µô·¹ÀÌ
+					 while(motorInterrupt1 < 30) { 										// 1È¸ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ 30ï¿½ï¿½Å­ È¸ï¿½ï¿½ (ï¿½ï¿½ 3ï¿½ï¿½) 
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					 }
 					 Motor_Stop();
 			}
@@ -158,16 +160,16 @@ void turnLeft(int num){ // num default : 25
  
 void turnRight(int num){ // num default : 27
 		 int i;
-		// uBrain¸¶´Ù ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î °¢µµ´Â °¢ÀÚ ¼öÁ¤
+		// uBrainï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		 for(i=0; i<num; i++) {
 					 Motor_Stop();
-					 osDelay(50); // ¿©±â µô·¹ÀÌ¸¦ ³·Ãß¸é Á»´õ ºÎµå·´°Ô µ¹ ¼ö ÀÖ´Ù.
+					 osDelay(50); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
  
-					 motorInterrupt2 = 1;		// ¹ÙÄû È¸Àü °ª ÃÊ±âÈ­
+					 motorInterrupt2 = 1;		// ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­
 					 Motor_Right();
 																
-					 while(motorInterrupt2 < 30) { 										// 1È¸ È¸Àü½Ã ¹ÙÄû È¸Àü¼ö 30¸¸Å­ È¸Àü (¾à 3µµ) 
-										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 °ªÀ» ÀÐ¾î¿À±â À§ÇÑ µô·¹ÀÌ
+					 while(motorInterrupt2 < 30) { 										// 1È¸ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ 30ï¿½ï¿½Å­ È¸ï¿½ï¿½ (ï¿½ï¿½ 3ï¿½ï¿½) 
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					 }
 					 Motor_Stop();
 			}
@@ -185,6 +187,9 @@ uint32_t close_left = 0;
 uint32_t close_right = 0;
 uint32_t IR_close_left = 0;
 uint32_t IR_close_right = 0;
+uint32_t empty_right = 0;
+uint32_t empty_left = 0;
+
 
 // uwDiffCapture1 : right
 // uwDiffCapture2 : forward
@@ -195,7 +200,7 @@ uint32_t IR_close_right = 0;
 // forward, right, left 1 -> backward
 
 void Detect_obstacle(){
-		osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+		osDelay(200);  // ï¿½Â½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		printf("\r\n Detect_obstacle");
 
 		for(;;)
@@ -203,7 +208,7 @@ void Detect_obstacle(){
 					// printf("detect obstacle\n");
 					// printf("Left : %d\n", uwDiffCapture3/58);
 					// printf("Right: %d\n", uwDiffCapture1/58);
-					osDelay(50);	//¹°Ã¼ ÀÎ½ÄÇÏ±â Àü¿¡ º®¿¡ ¹Ú´Â °æ¿ì´Â osDelay¸¦ ÁÙ¿©¼­ Á»´õ ¸¹ÀÌ °Ë»çÇÏµµ·Ï ¼öÁ¤ÇÑ´Ù.
+					osDelay(50);	//ï¿½ï¿½Ã¼ ï¿½Î½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ osDelayï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 					
 					if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
 					{
@@ -231,6 +236,12 @@ void Detect_obstacle(){
 					{
 						IR_close_left = 1;
 					}
+               else if((uwDiffCapture2/58 >=15)&&(uwDiffCapture2/58 <= 80)&&((uwDiffCapture1/58 - right_before/58)>50)){
+                  empty_right = 1;
+               }
+               else if((uwDiffCapture2/58 >=15)&&(uwDiffCapture2/58 <= 80)&&((uwDiffCapture3/58 - left_before/58)>50)){
+                  empty_left = 1;
+               }
 					else
 					{
 										// result = 0;
@@ -241,8 +252,10 @@ void Detect_obstacle(){
 										close_left = 0;
 									  IR_close_left = 0;
 										IR_close_right = 0;
+                              empty_left = 0;
+                              empty_right = 0;
 					}
-					// ÃÊÀ½ÆÄ ¾Õ ¼¾¼­°¡ 20º¸´Ù Å¬¶§
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 20ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½
 					/*{
 								if((uwDiffCapture1/58) < 4) // right						
 								{
@@ -277,7 +290,7 @@ void Detect_obstacle(){
 }
 
 void Motor_forandback(){
-		osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+		osDelay(200);  // ï¿½Â½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		printf("\r\n Motor_control");
 		Motor_Forward();
 		
@@ -298,7 +311,7 @@ void Motor_forandback(){
 }
 
 void Motor_control(){
-	osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+	osDelay(200);  // ï¿½Â½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	printf("\r\n Motor_control");
 	Motor_Forward();
 	
@@ -353,16 +366,24 @@ void Motor_control(){
 				// printf("left\n");
 				// printf("Motor control\n");
 				Motor_Stop();
-			  turnRight(3);
+			   turnRight(3);
 			}
+         else if(empty_left == 1) {
+				Motor_Stop();
+			   turnLeft(12);
+         }
+         else if(empty_right == 1) {
+				Motor_Stop();
+			   turnRight(13);
+         }
 			else {
-				osDelay(2000); // µ¹°í³­ ÈÄ¿¡ 2ÃÊ°£ µô·¹ÀÌ¸¦ ÁÜÀ¸·Î½á turn È®ÀÎÇØº½(³ªÁß¿¡ Áö¿ò)		
+				osDelay(2000); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ 2ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ turn È®ï¿½ï¿½ï¿½Øºï¿½(ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½)		
 				Motor_Forward();
 			}					
     }
 }
 
-/*Àû¿Ü¼± ÅÂ½ºÅ© ºÎºÐ - ³ªÁß¿¡ »ç¿ë(¼±ÅÃ) */
+/*ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½Â½ï¿½Å© ï¿½Îºï¿½ - ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) */
 void IR_Sensor(){
    for(;;){
 		 
@@ -376,7 +397,7 @@ void IR_Sensor(){
       uhADCxRight = HAL_ADC_GetValue(&AdcHandle2);
       HAL_ADC_PollForConversion(&AdcHandle2, 0xFF);
 		 
-		  //if(uhADCxLeft >1000 && uhADCxRight >1000) // ÄÚ³Ê¿¡ ÀÖÀ» ¶§ 
+		  //if(uhADCxLeft >1000 && uhADCxRight >1000) // ï¿½Ú³Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 
 		  //{
 				//if(uwDiffCapture1 > uwDiffCapture3)
 				//{
@@ -437,11 +458,11 @@ int main(void)
 	
 	
 	
-    /************************************** ¸ðÅÍ ½ÃÀÛ **************************************/
+    /************************************** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ **************************************/
    uwPrescalerValue = (SystemCoreClock/2)/1000000;
    
 
-   // PB2 ¸ðÅÍ Àü¿ø ÀÎ°¡¸¦ À§ÇÑ GPIO ÃÊ±âÈ­
+   // PB2 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GPIO ï¿½Ê±ï¿½È­
    __GPIOB_CLK_ENABLE();
       
    GPIO_InitStruct.Pin = GPIO_PIN_2;
@@ -451,7 +472,7 @@ int main(void)
       
    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
    
-   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET); // MC_EN(PB2) ¸ðÅÍ Àü¿ø 
+   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET); // MC_EN(PB2) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
    
    sConfig1.OCMode     = TIM_OCMODE_PWM1;
    sConfig1.OCPolarity = TIM_OCPOLARITY_HIGH;
@@ -485,11 +506,11 @@ int main(void)
    HAL_TIM_PWM_ConfigChannel(&TimHandle2, &sConfig2, TIM_CHANNEL_2);
 
    EXTILine_Config(); // Encoder Interrupt Setting
-   /************************************** ¸ðÅÍ ³¡ **************************************/
+   /************************************** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ **************************************/
 	 
 	 
 	 
-	  /************************************** ÃÊÀ½ÆÄ ½ÃÀÛ **************************************/
+	  /************************************** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ **************************************/
    uwPrescalerValue = ((SystemCoreClock / 2) / 1000000) - 1;   
 	 
    /* Set TIMx instance */
@@ -541,17 +562,17 @@ int main(void)
   
    /* Start channel 3 */   
    HAL_TIM_PWM_Start(&TimHandle4, TIM_CHANNEL_1);
-	 /************************************** ÃÊÀ½ÆÄ ³¡**************************************/
+	 /************************************** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½**************************************/
 	 
    
-	 /************************************** Àû¿Ü¼± ½ÃÀÛ**************************************/
+	 /************************************** ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½ï¿½**************************************/
 	 
-   AdcHandle1.Instance          = ADC3;   // ADC 3¹øºÐ
+   AdcHandle1.Instance          = ADC3;   // ADC 3ï¿½ï¿½ï¿½ï¿½
   
    AdcHandle1.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle1.Init.Resolution = ADC_RESOLUTION12b;
    AdcHandle1.Init.ScanConvMode = DISABLE;
-   // Mode ¼³Á¤
+   // Mode ï¿½ï¿½ï¿½ï¿½
    AdcHandle1.Init.ContinuousConvMode = DISABLE;
    AdcHandle1.Init.DiscontinuousConvMode = DISABLE;
    AdcHandle1.Init.NbrOfDiscConversion = 0;  
@@ -565,14 +586,14 @@ int main(void)
 
    HAL_ADC_Init(&AdcHandle1);//ADC Initialized
 
-   adcConfig1.Channel = ADC_CHANNEL_11; //Ã¤³Î ¼³Á¤
+   adcConfig1.Channel = ADC_CHANNEL_11; //Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
    adcConfig1.Rank = 1;
-   adcConfig1.SamplingTime = ADC_SAMPLETIME_480CYCLES; //»ùÇÃ¸µ ÁÖ±â ¼³Á¤
+   adcConfig1.SamplingTime = ADC_SAMPLETIME_480CYCLES; //ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½
    adcConfig1.Offset = 0;
 
    HAL_ADC_ConfigChannel(&AdcHandle1, &adcConfig1);
       
-   AdcHandle2.Instance          = ADC2;   // ADCºÎºÐ
+   AdcHandle2.Instance          = ADC2;   // ADCï¿½Îºï¿½
 
    AdcHandle2.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle2.Init.Resolution = ADC_RESOLUTION12b;
@@ -596,7 +617,7 @@ int main(void)
 
    HAL_ADC_ConfigChannel(&AdcHandle2, &adcConfig2);
    
-   AdcHandle3.Instance          = ADC1;   // ADCºÎºÐ
+   AdcHandle3.Instance          = ADC1;   // ADCï¿½Îºï¿½
 
    AdcHandle3.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle3.Init.Resolution = ADC_RESOLUTION12b;
@@ -618,12 +639,12 @@ int main(void)
    adcConfig3.SamplingTime = ADC_SAMPLETIME_480CYCLES;
    adcConfig3.Offset = 0;   
    HAL_ADC_ConfigChannel(&AdcHandle3, &adcConfig3);
-		/************************************** Àû¿Ü¼± ³¡**************************************/            
+		/************************************** ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½ï¿½**************************************/            
             
    
-	 /**** ES+L9.+Embedded+OS - 28 page Âü°í ****/
+	 /**** ES+L9.+Embedded+OS - 28 page ï¿½ï¿½ï¿½ï¿½ ****/
 		 
-	 /**********¿©±â¿¡ Task ¸¦ »ý¼ºÇÏ½Ã¿À********/
+	 /**********ï¿½ï¿½ï¿½â¿¡ Task ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã¿ï¿½********/
 	 
 	 // 
 
@@ -841,6 +862,18 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             /* Capture computation */
             if (uwIC2Value2 > uwIC2Value1)
             {
+                  right_before = (uwIC2Value2 - uwIC2Value1); 
+            }
+            else if (uwIC2Value2 < uwIC2Value1)
+            {
+                  right_before = ((0xFFFF - uwIC2Value1) + uwIC2Value2); 
+            }
+            else
+            {
+                  right_before = 0;
+            }
+            if (uwIC2Value2 > uwIC2Value1)
+            {
                   uwDiffCapture1 = (uwIC2Value2 - uwIC2Value1); 
             }
             else if (uwIC2Value2 < uwIC2Value1)
@@ -905,6 +938,18 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             uwIC2Value6 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4); 
             
             /* Capture computation */
+            if (uwIC2Value6 > uwIC2Value5)
+            {
+               left_before = (uwIC2Value6 - uwIC2Value5); 
+            }
+            else if (uwIC2Value6 < uwIC2Value5)
+            {
+               left_before = ((0xFFFF - uwIC2Value5) + uwIC2Value6); 
+            }
+            else
+            {
+               left_before = 0;
+            }
             if (uwIC2Value6 > uwIC2Value5)
             {
                uwDiffCapture3 = (uwIC2Value6 - uwIC2Value5); 
