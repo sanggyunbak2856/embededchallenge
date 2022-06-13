@@ -88,8 +88,6 @@ uint32_t               uwIC2Value6= 0;
 uint32_t               uwDiffCapture3 = 0;
 
 uint32_t               uwFrequency = 0;
-uint32_t               right_before = 0;
-uint32_t               left_before=0;
 
 /* ADC handler declaration */
 ADC_HandleTypeDef    AdcHandle1, AdcHandle2, AdcHandle3;
@@ -236,10 +234,10 @@ void Detect_obstacle(){
 					{
 						IR_close_left = 1;
 					}
-               else if((uwDiffCapture2/58 >=15)&&(uwDiffCapture2/58 <= 80)&&((uwDiffCapture1/58 - right_before/58)>50)){
+               else if((uwDiffCapture2/58 >=15)&&(uwDiffCapture2/58 <= 80)&&(uwDiffCapture1/58 >100)){
                   empty_right = 1;
                }
-               else if((uwDiffCapture2/58 >=15)&&(uwDiffCapture2/58 <= 80)&&((uwDiffCapture3/58 - left_before/58)>50)){
+               else if((uwDiffCapture2/58 >=15)&&(uwDiffCapture2/58 <= 80)&&(uwDiffCapture3/58 >100)){
                   empty_left = 1;
                }
 					else
@@ -860,18 +858,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             uwIC2Value2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2); 
             
             /* Capture computation */
-            if (uwIC2Value2 > uwIC2Value1)
-            {
-                  right_before = (uwIC2Value2 - uwIC2Value1); 
-            }
-            else if (uwIC2Value2 < uwIC2Value1)
-            {
-                  right_before = ((0xFFFF - uwIC2Value1) + uwIC2Value2); 
-            }
-            else
-            {
-                  right_before = 0;
-            }
+
             if (uwIC2Value2 > uwIC2Value1)
             {
                   uwDiffCapture1 = (uwIC2Value2 - uwIC2Value1); 
@@ -938,18 +925,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
             uwIC2Value6 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4); 
             
             /* Capture computation */
-            if (uwIC2Value6 > uwIC2Value5)
-            {
-               left_before = (uwIC2Value6 - uwIC2Value5); 
-            }
-            else if (uwIC2Value6 < uwIC2Value5)
-            {
-               left_before = ((0xFFFF - uwIC2Value5) + uwIC2Value6); 
-            }
-            else
-            {
-               left_before = 0;
-            }
+            
             if (uwIC2Value6 > uwIC2Value5)
             {
                uwDiffCapture3 = (uwIC2Value6 - uwIC2Value5); 
