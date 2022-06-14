@@ -205,8 +205,8 @@ void Detect_obstacle(){
 		for(;;)
 			{
 					// printf("detect obstacle\n");
-					 printf("Left : %d\n", uwDiffCapture3/58);
-					 printf("Right: %d\n", uwDiffCapture1/58);
+					printf("Left : %d\n", uwDiffCapture3/58);
+					printf("Right: %d\n", uwDiffCapture1/58);
 					osDelay(30);	//��ü �ν��ϱ� ���� ���� �ڴ� ���� osDelay�� �ٿ��� ���� ���� �˻��ϵ��� �����Ѵ�.
 					
 					if((uwDiffCapture2/58 > 0 && (uwDiffCapture2/58) < 22) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
@@ -236,19 +236,19 @@ void Detect_obstacle(){
 					else if((uwDiffCapture2/58 >=70)&&(uwDiffCapture2/58 <= 100)&&((uwDiffCapture1/58 >100) &&  (uwDiffCapture1/58 <180)) && (first == 0)){
                   empty_right = 1;
                }
-          else if((uwDiffCapture2/58 >=70)&&(uwDiffCapture2/58 <= 100)&&((uwDiffCapture3/58 >100) &&  (uwDiffCapture3/58 <180)) && (first == 0)){
+               else if((uwDiffCapture2/58 >=70)&&(uwDiffCapture2/58 <= 100)&&((uwDiffCapture3/58 >100) &&  (uwDiffCapture3/58 <180)) && (first == 0)){
                   empty_left = 1;
                }
 					else
 					{
-										result_left = 0;
-										result_right = 0;
-										close_right = 0;
-										close_left = 0;
-									  IR_close_left = 0;
-										IR_close_right = 0;
-										empty_left = 0;
-										empty_right = 0;
+					result_left = 0;
+					result_right = 0;
+					close_right = 0;
+					close_left = 0;
+					IR_close_left = 0;
+					IR_close_right = 0;
+					empty_left = 0;
+					empty_right = 0;
 					}
 			}
 }
@@ -297,18 +297,17 @@ void Motor_control(){
 					turnLeft(28);
 				}
 				result_left = 0;
-										result_right = 0;
-										// result_back = 0;
-										close_right = 0;
-										close_left = 0;
-									  IR_close_left = 0;
-										IR_close_right = 0;
-										empty_left = 0;
-										empty_right = 0;
-										if (count >=2)
-										{
-											first = 0;
-										}
+				result_right = 0;
+				close_right = 0;
+				close_left = 0;
+				IR_close_left = 0;
+				IR_close_right = 0;
+				empty_left = 0;
+				empty_right = 0;
+				if (count >=2)
+				{
+					first = 0;
+				}
 			}
 			else if(result_right == 1)
 			{
@@ -325,18 +324,17 @@ void Motor_control(){
 					turnRight(32);
 				}
 				result_left = 0;
-										result_right = 0;
-										// result_back = 0;
-										close_right = 0;
-										close_left = 0;
-									  IR_close_left = 0;
-										IR_close_right = 0;
-										empty_left = 0;
-										empty_right = 0;
-										if(count == 2)
-										{
-												first  = 0;
-										}
+				result_right = 0;
+				close_right = 0;
+				close_left = 0;
+				IR_close_left = 0;
+				IR_close_right = 0;
+				empty_left = 0;
+				empty_right = 0;
+				if(count == 2)
+				{
+					first  = 0;
+				}
 			}
 
 			else if(close_right == 1) {
