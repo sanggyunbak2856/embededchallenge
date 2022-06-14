@@ -176,10 +176,8 @@ void turnRight(int num){ // num default : 27
 
 
 /*********************************  task ************************************/
-uint32_t result = 0;
 uint32_t result_left = 0;
 uint32_t result_right = 0;
-uint32_t result_back = 0;
 uint32_t forward = 0;
 uint32_t close_left = 0;
 uint32_t close_right = 0;
@@ -203,19 +201,14 @@ void Detect_obstacle(){
 
 		for(;;)
 			{
-					// printf("detect obstacle\n");
-					// printf("Left : %d\n", uwDiffCapture3/58);
-					// printf("Right: %d\n", uwDiffCapture1/58);
 					osDelay(50);	//��ü �ν��ϱ� ���� ���� �ڴ� ���� osDelay�� �ٿ��� ���� ���� �˻��ϵ��� �����Ѵ�.
 					
 					if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
 					{
-						// result = 1;
 						result_left = 1;
 					}
 					else if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) >= (uwDiffCapture3/58)))
 					{  
-						// result = 1;
 						result_right = 1;
 					}
 					else if((uwDiffCapture2/58 >= 15) && (uwDiffCapture1/58 < 4)) // right
@@ -242,10 +235,8 @@ void Detect_obstacle(){
                }
 					else
 					{
-										// result = 0;
 										result_left = 0;
 										result_right = 0;
-										// result_back = 0;
 										close_right = 0;
 										close_left = 0;
 									  IR_close_left = 0;
@@ -327,42 +318,19 @@ void Motor_control(){
 				Motor_Stop();
 				turnRight(27);
 			}
-			
-			/*if(result ==1){
-				Motor_Stop();
-							if(result_left == 1)
-							{
-								// printf("Left\n");
-								turnLeft(25);
-							}
-							else if(result_right == 1)
-							{
-								// printf("Right\n");
-								turnRight(27);
-							}
-						}
-			*/
 			else if(close_right == 1) {
-				// printf("right\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 				turnLeft(3);
 			}
 			else if(close_left == 1) {
-				// printf("left\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 			  turnRight(3);
 			}
 			else if(IR_close_right == 1) {
-				// printf("right\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 				turnLeft(3);
 			}
 			else if(IR_close_left == 1) {
-				// printf("left\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 			   turnRight(3);
 			}
@@ -394,41 +362,18 @@ void IR_Sensor(){
       HAL_ADC_Start(&AdcHandle2);
       uhADCxRight = HAL_ADC_GetValue(&AdcHandle2);
       HAL_ADC_PollForConversion(&AdcHandle2, 0xFF);
-		 
-		  //if(uhADCxLeft >1000 && uhADCxRight >1000) // �ڳʿ� ���� �� 
-		  //{
-				//if(uwDiffCapture1 > uwDiffCapture3)
-				//{
-					//printf("turn right\n");
-					//turnRight(2);
-				//}
-				/*else
-				{
-					printf("turn left\n");
-					turnLeft(2);
-				}
-			  
-		 }*/
-		 
 		  if(uhADCxLeft > 2000) { // 2000 -> 2cm, 100 -> 15cm
 				uhADCxLeft= 2000;
 			}
       else if(uhADCxLeft<100){
 				uhADCxLeft = 100;
 			}
-      // printf("\r\nIR sensor Left = %d", uhADCxLeft);
-		 
       if(uhADCxRight >2000) {
 				uhADCxRight= 2000;
 			}
       else if(uhADCxRight<100) {
 				uhADCxRight = 100;
 			}
-      // printf("\r\nIR sensor Right = %d", uhADCxRight);
-			
-			// printf("IR left : %d\n", uhADCxLeft);
-		  // printf("IR right : %d\n", uhADCxRight);
-      
        osDelay(10);
    }
    
@@ -650,7 +595,6 @@ int main(void)
 	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 1, NULL);
 	 xTaskCreate( IR_Sensor, "IR", 1000, NULL, 1, NULL);
 	 xTaskCreate( Motor_control, "motor", 1000, NULL, 5, NULL);
-   //xTaskCreate( Motor_forandback, "motor", 1000, NULL, 2, NULL);
 
 	 vTaskStartScheduler();
 	 
