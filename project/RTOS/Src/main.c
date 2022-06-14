@@ -138,19 +138,19 @@ PUTCHAR_PROTOTYPE
   */
 
 
- //¿ÞÂÊÀ¸·Î 90µµ µ¹±âÀ§ÇÑ ÇÔ¼ö
+ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
 void turnLeft(int num){ // num default : 25
 		 int i;
-		// uBrain¸¶´Ù ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î °¢µµ´Â °¢ÀÚ ¼öÁ¤
+		// uBrainï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		 for(i=0; i<num; i++) {
 					 Motor_Stop();
-					 osDelay(10); // ¿©±â µô·¹ÀÌ¸¦ ³·Ãß¸é Á»´õ ºÎµå·´°Ô µ¹ ¼ö ÀÖ´Ù.
+					 osDelay(10); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
  
-					 motorInterrupt1 = 1;		// ¹ÙÄû È¸Àü °ª ÃÊ±âÈ­
+					 motorInterrupt1 = 1;		// ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­
 					 Motor_Left();
 																
-					 while(motorInterrupt1 < 30) { 										// 1È¸ È¸Àü½Ã ¹ÙÄû È¸Àü¼ö 30¸¸Å­ È¸Àü (¾à 3µµ) 
-										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 °ªÀ» ÀÐ¾î¿À±â À§ÇÑ µô·¹ÀÌ
+					 while(motorInterrupt1 < 30) { 										// 1È¸ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ 30ï¿½ï¿½Å­ È¸ï¿½ï¿½ (ï¿½ï¿½ 3ï¿½ï¿½) 
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					 }
 					 Motor_Stop();
 			}
@@ -158,16 +158,16 @@ void turnLeft(int num){ // num default : 25
  
 void turnRight(int num){ // num default : 27
 		 int i;
-		// uBrain¸¶´Ù ´Ù¸¦ ¼ö ÀÖÀ¸¹Ç·Î °¢µµ´Â °¢ÀÚ ¼öÁ¤
+		// uBrainï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		 for(i=0; i<num; i++) {
 					 Motor_Stop();
-					 osDelay(10); // ¿©±â µô·¹ÀÌ¸¦ ³·Ãß¸é Á»´õ ºÎµå·´°Ô µ¹ ¼ö ÀÖ´Ù.
+					 osDelay(10); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
  
-					 motorInterrupt2 = 1;		// ¹ÙÄû È¸Àü °ª ÃÊ±âÈ­
+					 motorInterrupt2 = 1;		// ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­
 					 Motor_Right();
 																
-					 while(motorInterrupt2 < 30) { 										// 1È¸ È¸Àü½Ã ¹ÙÄû È¸Àü¼ö 30¸¸Å­ È¸Àü (¾à 3µµ) 
-										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 °ªÀ» ÀÐ¾î¿À±â À§ÇÑ µô·¹ÀÌ
+					 while(motorInterrupt2 < 30) { 										// 1È¸ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ 30ï¿½ï¿½Å­ È¸ï¿½ï¿½ (ï¿½ï¿½ 3ï¿½ï¿½) 
+										osDelay(1/portTICK_RATE_MS);  // motorInterrupt1 ï¿½ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					 }
 					 Motor_Stop();
 			}
@@ -199,7 +199,7 @@ uint32_t count = 0;
 // forward, right, left 1 -> backward
 
 void Detect_obstacle(){
-		osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+		osDelay(200);  // ï¿½Â½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		printf("\r\n Detect_obstacle");
 
 		for(;;)
@@ -207,16 +207,14 @@ void Detect_obstacle(){
 					// printf("detect obstacle\n");
 					 printf("Left : %d\n", uwDiffCapture3/58);
 					 printf("Right: %d\n", uwDiffCapture1/58);
-					osDelay(30);	//¹°Ã¼ ÀÎ½ÄÇÏ±â Àü¿¡ º®¿¡ ¹Ú´Â °æ¿ì´Â osDelay¸¦ ÁÙ¿©¼­ Á»´õ ¸¹ÀÌ °Ë»çÇÏµµ·Ï ¼öÁ¤ÇÑ´Ù.
+					osDelay(30);	//ï¿½ï¿½Ã¼ ï¿½Î½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ï¿½ osDelayï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 					
 					if((uwDiffCapture2/58 > 0 && (uwDiffCapture2/58) < 22) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
 					{
-						// result = 1;
 						result_left = 1;
 					}
 					else if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 22) && ((uwDiffCapture1/58) >= (uwDiffCapture3/58)))
 					{  
-						// result = 1;
 						result_right = 1;
 					}
 					else if((uwDiffCapture2/58 >= 22) && (uwDiffCapture1/58 < 4)) // right
@@ -243,10 +241,8 @@ void Detect_obstacle(){
                }
 					else
 					{
-										// result = 0;
 										result_left = 0;
 										result_right = 0;
-										// result_back = 0;
 										close_right = 0;
 										close_left = 0;
 									  IR_close_left = 0;
@@ -254,42 +250,11 @@ void Detect_obstacle(){
 										empty_left = 0;
 										empty_right = 0;
 					}
-					// ÃÊÀ½ÆÄ ¾Õ ¼¾¼­°¡ 20º¸´Ù Å¬¶§
-					/*{
-								if((uwDiffCapture1/58) < 4) // right						
-								{
-									close_right = 1;
-								}
-								else if((uwDiffCapture3/58) < 4) // left
-								{
-									close_left = 1;
-								}
-								else if(uhADCxRight > 1700)
-								{
-									IR_close_right = 1;
-								}
-								else if(uhADCxLeft > 1700)
-								{
-									IR_close_left = 1;
-								}
-								else
-								{
-										result = 0;
-										result_left = 0;
-										result_right = 0;
-										// result_back = 0;
-										close_right = 0;
-										close_left = 0;
-									  IR_close_left = 0;
-										IR_close_right = 0;
-										//   printf("\r\n result = %d", result);
-								}
-					}*/
 			}
 }
 
 void Motor_forandback(){
-		osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+		osDelay(200);  // ï¿½Â½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		printf("\r\n Motor_control");
 		Motor_Forward();
 		
@@ -310,7 +275,7 @@ void Motor_forandback(){
 }
 
 void Motor_control(){
-	osDelay(200);  // ÅÂ½ºÅ© ¸¸µç ÈÄ ¾à°£ÀÇ µô·¹ÀÌ
+	osDelay(200);  // ï¿½Â½ï¿½Å© ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	printf("\r\n Motor_control");
 	Motor_Forward();
 	
@@ -373,42 +338,20 @@ void Motor_control(){
 												first  = 0;
 										}
 			}
-			
-			/*if(result ==1){
-				Motor_Stop();
-							if(result_left == 1)
-							{
-								// printf("Left\n");
-								turnLeft(25);
-							}
-							else if(result_right == 1)
-							{
-								// printf("Right\n");
-								turnRight(27);
-							}
-						}
-			*/
+
 			else if(close_right == 1) {
-				// printf("right\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 				turnLeft(1);
 			}
 			else if(close_left == 1) {
-				// printf("left\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 			  turnRight(1);
 			}
 			else if(IR_close_right == 1) {
-				// printf("right\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 				turnLeft(1);
 			}
 			else if(IR_close_left == 1) {
-				// printf("left\n");
-				// printf("Motor control\n");
 				Motor_Stop();
 			  turnRight(1);
 			}
@@ -421,13 +364,13 @@ void Motor_control(){
 			   turnRight(32);
        }
 			else {
-				osDelay(2000); // µ¹°í³­ ÈÄ¿¡ 2ÃÊ°£ µô·¹ÀÌ¸¦ ÁÜÀ¸·Î½á turn È®ÀÎÇØº½(³ªÁß¿¡ Áö¿ò)		
+				osDelay(2000); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¿ï¿½ 2ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½ turn È®ï¿½ï¿½ï¿½Øºï¿½(ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½ï¿½)		
 				Motor_Forward();
 			}					
     }
 }
 
-/*Àû¿Ü¼± ÅÂ½ºÅ© ºÎºÐ - ³ªÁß¿¡ »ç¿ë(¼±ÅÃ) */
+/*ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½Â½ï¿½Å© ï¿½Îºï¿½ - ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) */
 void IR_Sensor(){
    for(;;){
 		 
@@ -440,29 +383,14 @@ void IR_Sensor(){
       HAL_ADC_Start(&AdcHandle2);
       uhADCxRight = HAL_ADC_GetValue(&AdcHandle2);
       HAL_ADC_PollForConversion(&AdcHandle2, 0xFF);
+
 		 
-		  //if(uhADCxLeft >1000 && uhADCxRight >1000) // ÄÚ³Ê¿¡ ÀÖÀ» ¶§ 
-		  //{
-				//if(uwDiffCapture1 > uwDiffCapture3)
-				//{
-					//printf("turn right\n");
-					//turnRight(2);
-				//}
-				/*else
-				{
-					printf("turn left\n");
-					turnLeft(2);
-				}
-			  
-		 }*/
-		 
-		  if(uhADCxLeft > 2000) { // 2000 -> 2cm, 100 -> 15cm
+		if(uhADCxLeft > 2000) { // 2000 -> 2cm, 100 -> 15cm
 				uhADCxLeft= 2000;
 			}
       else if(uhADCxLeft<100){
 				uhADCxLeft = 100;
 			}
-      // printf("\r\nIR sensor Left = %d", uhADCxLeft);
 		 
       if(uhADCxRight >2000) {
 				uhADCxRight= 2000;
@@ -470,10 +398,6 @@ void IR_Sensor(){
       else if(uhADCxRight<100) {
 				uhADCxRight = 100;
 			}
-      // printf("\r\nIR sensor Right = %d", uhADCxRight);
-			
-			// printf("IR left : %d\n", uhADCxLeft);
-		  // printf("IR right : %d\n", uhADCxRight);
       
        osDelay(10);
    }
@@ -502,11 +426,11 @@ int main(void)
 	
 	
 	
-    /************************************** ¸ðÅÍ ½ÃÀÛ **************************************/
+    /************************************** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ **************************************/
    uwPrescalerValue = (SystemCoreClock/2)/1000000;
    
 
-   // PB2 ¸ðÅÍ Àü¿ø ÀÎ°¡¸¦ À§ÇÑ GPIO ÃÊ±âÈ­
+   // PB2 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GPIO ï¿½Ê±ï¿½È­
    __GPIOB_CLK_ENABLE();
       
    GPIO_InitStruct.Pin = GPIO_PIN_2;
@@ -516,7 +440,7 @@ int main(void)
       
    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
    
-   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET); // MC_EN(PB2) ¸ðÅÍ Àü¿ø 
+   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET); // MC_EN(PB2) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
    
    sConfig1.OCMode     = TIM_OCMODE_PWM1;
    sConfig1.OCPolarity = TIM_OCPOLARITY_HIGH;
@@ -550,11 +474,11 @@ int main(void)
    HAL_TIM_PWM_ConfigChannel(&TimHandle2, &sConfig2, TIM_CHANNEL_2);
 
    EXTILine_Config(); // Encoder Interrupt Setting
-   /************************************** ¸ðÅÍ ³¡ **************************************/
+   /************************************** ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ **************************************/
 	 
 	 
 	 
-	  /************************************** ÃÊÀ½ÆÄ ½ÃÀÛ **************************************/
+	  /************************************** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ **************************************/
    uwPrescalerValue = ((SystemCoreClock / 2) / 1000000) - 1;   
 	 
    /* Set TIMx instance */
@@ -606,17 +530,17 @@ int main(void)
   
    /* Start channel 3 */   
    HAL_TIM_PWM_Start(&TimHandle4, TIM_CHANNEL_1);
-	 /************************************** ÃÊÀ½ÆÄ ³¡**************************************/
+	 /************************************** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½**************************************/
 	 
    
-	 /************************************** Àû¿Ü¼± ½ÃÀÛ**************************************/
+	 /************************************** ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½ï¿½**************************************/
 	 
-   AdcHandle1.Instance          = ADC3;   // ADC 3¹øºÐ
+   AdcHandle1.Instance          = ADC3;   // ADC 3ï¿½ï¿½ï¿½ï¿½
   
    AdcHandle1.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle1.Init.Resolution = ADC_RESOLUTION12b;
    AdcHandle1.Init.ScanConvMode = DISABLE;
-   // Mode ¼³Á¤
+   // Mode ï¿½ï¿½ï¿½ï¿½
    AdcHandle1.Init.ContinuousConvMode = DISABLE;
    AdcHandle1.Init.DiscontinuousConvMode = DISABLE;
    AdcHandle1.Init.NbrOfDiscConversion = 0;  
@@ -630,14 +554,14 @@ int main(void)
 
    HAL_ADC_Init(&AdcHandle1);//ADC Initialized
 
-   adcConfig1.Channel = ADC_CHANNEL_11; //Ã¤³Î ¼³Á¤
+   adcConfig1.Channel = ADC_CHANNEL_11; //Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
    adcConfig1.Rank = 1;
-   adcConfig1.SamplingTime = ADC_SAMPLETIME_480CYCLES; //»ùÇÃ¸µ ÁÖ±â ¼³Á¤
+   adcConfig1.SamplingTime = ADC_SAMPLETIME_480CYCLES; //ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½
    adcConfig1.Offset = 0;
 
    HAL_ADC_ConfigChannel(&AdcHandle1, &adcConfig1);
       
-   AdcHandle2.Instance          = ADC2;   // ADCºÎºÐ
+   AdcHandle2.Instance          = ADC2;   // ADCï¿½Îºï¿½
 
    AdcHandle2.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle2.Init.Resolution = ADC_RESOLUTION12b;
@@ -661,7 +585,7 @@ int main(void)
 
    HAL_ADC_ConfigChannel(&AdcHandle2, &adcConfig2);
    
-   AdcHandle3.Instance          = ADC1;   // ADCºÎºÐ
+   AdcHandle3.Instance          = ADC1;   // ADCï¿½Îºï¿½
 
    AdcHandle3.Init.ClockPrescaler = ADC_CLOCKPRESCALER_PCLK_DIV2;
    AdcHandle3.Init.Resolution = ADC_RESOLUTION12b;
@@ -683,12 +607,12 @@ int main(void)
    adcConfig3.SamplingTime = ADC_SAMPLETIME_480CYCLES;
    adcConfig3.Offset = 0;   
    HAL_ADC_ConfigChannel(&AdcHandle3, &adcConfig3);
-		/************************************** Àû¿Ü¼± ³¡**************************************/            
+		/************************************** ï¿½ï¿½ï¿½Ü¼ï¿½ ï¿½ï¿½**************************************/            
             
    
-	 /**** ES+L9.+Embedded+OS - 28 page Âü°í ****/
+	 /**** ES+L9.+Embedded+OS - 28 page ï¿½ï¿½ï¿½ï¿½ ****/
 		 
-	 /**********¿©±â¿¡ Task ¸¦ »ý¼ºÇÏ½Ã¿À********/
+	 /**********ï¿½ï¿½ï¿½â¿¡ Task ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï½Ã¿ï¿½********/
 	 
 	 // 
 
@@ -696,7 +620,6 @@ int main(void)
 	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 1, NULL);
 	 xTaskCreate( IR_Sensor, "IR", 1000, NULL, 1, NULL);
 	 xTaskCreate( Motor_control, "motor", 1000, NULL, 1, NULL);
-   //xTaskCreate( Motor_forandback, "motor", 1000, NULL, 2, NULL);
 
 	 vTaskStartScheduler();
 	 
