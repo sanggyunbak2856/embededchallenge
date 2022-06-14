@@ -144,7 +144,7 @@ void turnLeft(int num){ // num default : 25
 		// uBrain마다 다를 수 있으므로 각도는 각자 수정
 		 for(i=0; i<num; i++) {
 					 Motor_Stop();
-					 osDelay(50); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
+					 osDelay(10); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
  
 					 motorInterrupt1 = 1;		// 바퀴 회전 값 초기화
 					 Motor_Left();
@@ -161,7 +161,7 @@ void turnRight(int num){ // num default : 27
 		// uBrain마다 다를 수 있으므로 각도는 각자 수정
 		 for(i=0; i<num; i++) {
 					 Motor_Stop();
-					 osDelay(50); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
+					 osDelay(10); // 여기 딜레이를 낮추면 좀더 부드럽게 돌 수 있다.
  
 					 motorInterrupt2 = 1;		// 바퀴 회전 값 초기화
 					 Motor_Right();
@@ -185,6 +185,10 @@ uint32_t close_left = 0;
 uint32_t close_right = 0;
 uint32_t IR_close_left = 0;
 uint32_t IR_close_right = 0;
+uint32_t empty_left = 0;
+uint32_t empty_right = 0;
+uint32_t first = 1;
+uint32_t count = 0;
 
 // uwDiffCapture1 : right
 // uwDiffCapture2 : forward
@@ -201,36 +205,42 @@ void Detect_obstacle(){
 		for(;;)
 			{
 					// printf("detect obstacle\n");
-					// printf("Left : %d\n", uwDiffCapture3/58);
-					// printf("Right: %d\n", uwDiffCapture1/58);
-					osDelay(50);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
+					 printf("Left : %d\n", uwDiffCapture3/58);
+					 printf("Right: %d\n", uwDiffCapture1/58);
+					osDelay(30);	//물체 인식하기 전에 벽에 박는 경우는 osDelay를 줄여서 좀더 많이 검사하도록 수정한다.
 					
-					if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
+					if((uwDiffCapture2/58 > 0 && (uwDiffCapture2/58) < 22) && ((uwDiffCapture1/58) < (uwDiffCapture3/58)))
 					{
 						// result = 1;
 						result_left = 1;
 					}
-					else if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 15) && ((uwDiffCapture1/58) >= (uwDiffCapture3/58)))
+					else if((uwDiffCapture2/58 > 0 && uwDiffCapture2/58 < 22) && ((uwDiffCapture1/58) >= (uwDiffCapture3/58)))
 					{  
 						// result = 1;
 						result_right = 1;
 					}
-					else if((uwDiffCapture2/58 >= 15) && (uwDiffCapture1/58 < 4)) // right
+					else if((uwDiffCapture2/58 >= 22) && (uwDiffCapture1/58 < 4)) // right
 					{
 						close_right = 1;
 					}
-					else if((uwDiffCapture2/58 >= 15) && (uwDiffCapture3/58 < 4)) //  left
+					else if((uwDiffCapture2/58 >= 22) && (uwDiffCapture3/58 < 4)) //  left
 					{
 						close_left = 1;
 					}
-					else if((uwDiffCapture2/58 >= 15) && (uhADCxRight > 1250))
+					else if((uwDiffCapture2/58 >= 22) && (uhADCxRight > 1000))
 					{
 						IR_close_right = 1;
 					}
-					else if((uwDiffCapture2/58 >= 15) && (uhADCxLeft > 1250))
+					else if((uwDiffCapture2/58 >= 22) && (uhADCxLeft > 1000))
 					{
 						IR_close_left = 1;
 					}
+					else if((uwDiffCapture2/58 >=70)&&(uwDiffCapture2/58 <= 100)&&((uwDiffCapture1/58 >100) &&  (uwDiffCapture1/58 <180)) && (first == 0)){
+                  empty_right = 1;
+               }
+          else if((uwDiffCapture2/58 >=70)&&(uwDiffCapture2/58 <= 100)&&((uwDiffCapture3/58 >100) &&  (uwDiffCapture3/58 <180)) && (first == 0)){
+                  empty_left = 1;
+               }
 					else
 					{
 										// result = 0;
@@ -241,6 +251,8 @@ void Detect_obstacle(){
 										close_left = 0;
 									  IR_close_left = 0;
 										IR_close_right = 0;
+										empty_left = 0;
+										empty_right = 0;
 					}
 					// 초음파 앞 센서가 20보다 클때
 					/*{
@@ -308,13 +320,58 @@ void Motor_control(){
 			{
 				printf("Motor control\n");
 				Motor_Stop();
-				turnLeft(25);
+				if (first == 1)
+				{
+					count++;
+					turnRight(32
+					);
+				}
+				else
+				{
+					count++;
+					turnLeft(28);
+				}
+				result_left = 0;
+										result_right = 0;
+										// result_back = 0;
+										close_right = 0;
+										close_left = 0;
+									  IR_close_left = 0;
+										IR_close_right = 0;
+										empty_left = 0;
+										empty_right = 0;
+										if (count >=2)
+										{
+											first = 0;
+										}
 			}
 			else if(result_right == 1)
 			{
 				printf("Motor control\n");
 				Motor_Stop();
-				turnRight(27);
+				if (first == 1)
+				{
+					count++;
+					turnLeft(28);
+				}
+				else
+				{
+					count++;
+					turnRight(32);
+				}
+				result_left = 0;
+										result_right = 0;
+										// result_back = 0;
+										close_right = 0;
+										close_left = 0;
+									  IR_close_left = 0;
+										IR_close_right = 0;
+										empty_left = 0;
+										empty_right = 0;
+										if(count == 2)
+										{
+												first  = 0;
+										}
 			}
 			
 			/*if(result ==1){
@@ -335,26 +392,34 @@ void Motor_control(){
 				// printf("right\n");
 				// printf("Motor control\n");
 				Motor_Stop();
-				turnLeft(3);
+				turnLeft(1);
 			}
 			else if(close_left == 1) {
 				// printf("left\n");
 				// printf("Motor control\n");
 				Motor_Stop();
-			  turnRight(3);
+			  turnRight(1);
 			}
 			else if(IR_close_right == 1) {
 				// printf("right\n");
 				// printf("Motor control\n");
 				Motor_Stop();
-				turnLeft(3);
+				turnLeft(1);
 			}
 			else if(IR_close_left == 1) {
 				// printf("left\n");
 				// printf("Motor control\n");
 				Motor_Stop();
-			  turnRight(3);
+			  turnRight(1);
 			}
+			else if(empty_left == 1) {
+				Motor_Stop();
+			   turnLeft(28);
+       }
+         else if(empty_right == 1) {
+				Motor_Stop();
+			   turnRight(32);
+       }
 			else {
 				osDelay(2000); // 돌고난 후에 2초간 딜레이를 줌으로써 turn 확인해봄(나중에 지움)		
 				Motor_Forward();
@@ -630,7 +695,7 @@ int main(void)
 	 
 	 xTaskCreate( Detect_obstacle, "obstacle", 1000, NULL, 1, NULL);
 	 xTaskCreate( IR_Sensor, "IR", 1000, NULL, 1, NULL);
-	 xTaskCreate( Motor_control, "motor", 1000, NULL, 5, NULL);
+	 xTaskCreate( Motor_control, "motor", 1000, NULL, 1, NULL);
    //xTaskCreate( Motor_forandback, "motor", 1000, NULL, 2, NULL);
 
 	 vTaskStartScheduler();
