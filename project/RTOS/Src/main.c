@@ -180,7 +180,6 @@ uint32_t result = 0;
 uint32_t result_left = 0;
 uint32_t result_right = 0;
 uint32_t result_back = 0;
-uint32_t forward = 0;
 uint32_t close_left = 0;
 uint32_t close_right = 0;
 uint32_t IR_close_left = 0;
